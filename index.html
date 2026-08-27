@@ -22,13 +22,9 @@
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Typed.js สำหรับลูกเล่นพิมพ์ข้อความ -->
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    
     <style>
         body.loading { overflow: hidden; }
         .smooth-transition { transition: all 0.3s ease; }
-        /* ซ่อน Scrollbar ของตะกร้าให้สวยงาม */
         #cart-items::-webkit-scrollbar { width: 6px; }
         #cart-items::-webkit-scrollbar-thumb { background-color: #f97316; border-radius: 10px; }
     </style>
@@ -36,12 +32,17 @@
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 smooth-transition loading relative">
 
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-[100] bg-white dark:bg-gray-900 flex flex-col items-center justify-center transition-opacity duration-700">
+    <div id="preloader" class="fixed inset-0 z-[300] bg-white dark:bg-gray-900 flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="animate-bounce mb-4">
             <h1 class="text-6xl font-extrabold text-orange-600 tracking-widest drop-shadow-lg">dpAlLL</h1>
         </div>
         <div class="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
         <p class="mt-4 text-gray-500 dark:text-gray-400 font-medium tracking-wide animate-pulse" data-i18n="loadingSite">กำลังเตรียมความอร่อย...</p>
+    </div>
+
+    <!-- Top Announcement Bar (ด้านบนสุด) -->
+    <div class="bg-gray-900 text-white text-xs sm:text-sm py-2 px-4 text-center z-50 relative">
+        <span data-i18n="topBarText">🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี</span>
     </div>
 
     <!-- Navbar -->
@@ -52,7 +53,10 @@
                     <h1 class="text-3xl font-bold text-orange-600 tracking-wider">dpAlLL</h1>
                 </div>
                 <div class="flex items-center space-x-1 sm:space-x-4">
-                    <button id="lang-toggle" class="px-3 py-1.5 border border-orange-500 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 font-medium smooth-transition shadow-sm">EN</button>
+                    <a href="#about" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navAbout">เกี่ยวกับเรา</a>
+                    <a href="#products" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navProducts">สินค้าของเรา</a>
+                    
+                    <button id="lang-toggle" class="ml-2 px-3 py-1.5 border border-orange-500 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 font-medium smooth-transition shadow-sm">EN</button>
                     <button id="theme-toggle" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg smooth-transition">
                         <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
                         <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -62,17 +66,45 @@
         </div>
     </nav>
 
-    <!-- Hero Section (พร้อม Typed.js) -->
-    <div class="relative bg-orange-100 dark:bg-gray-800 py-20 sm:py-28 overflow-hidden smooth-transition">
+    <!-- Hero Section (ข้อความนิ่ง) -->
+    <div class="relative bg-orange-100 dark:bg-gray-800 py-16 sm:py-24 overflow-hidden smooth-transition">
         <div class="absolute top-0 left-0 w-full h-full opacity-10 dark:opacity-5 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in" data-aos-duration="1000">
-            <!-- จุดที่จะให้ลูกเล่นพิมพ์ข้อความทำงาน -->
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight h-16 sm:h-20">
-                <span id="typed-title" class="text-orange-600 drop-shadow-md"></span>
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                <span data-i18n="heroTitle">อร่อยง่ายๆ สไตล์</span> <span class="text-orange-600 drop-shadow-md">dpAlLL</span>
             </h2>
-            <p id="typed-subtitle" class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto h-20 sm:h-16">
-                <!-- คำบรรยายจะถูกพิมพ์ตรงนี้ -->
+            <p class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="heroDesc">
+                ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย
             </p>
+        </div>
+    </div>
+
+    <!-- About & Standards Section -->
+    <div id="about" class="bg-white dark:bg-gray-900 py-16 border-b border-gray-100 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div data-aos="fade-up" data-aos-delay="0">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutHistoryTitle">ความเป็นมา</h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutHistoryDesc">เริ่มต้นจากสูตรลับก้นครัว สู่ผลิตภัณฑ์พรีเมียมที่ส่งมอบความอร่อยถึงมือคุณในทุกมื้อมาอย่างยาวนาน</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutStandardTitle">มาตรฐานระดับสากล</h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutStandardDesc">โรงงานผลิตด้วยกรรมวิธีที่สะอาด ปลอดภัย ผ่านการรับรองมาตรฐานสากล GMP และ HACCP</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutAwardTitle">รางวัลการันตี</h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutAwardDesc">สุดยอดรสชาติแห่งปี รางวัลผลิตภัณฑ์อาหารดีเด่น 3 ปีซ้อนจากสถาบันรับรองคุณภาพอาหาร</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -82,7 +114,6 @@
             <h3 class="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-orange-500 pb-2 inline-block" data-i18n="productTitle">สินค้าของเรา</h3>
         </div>
         
-        <!-- ปุ่มหมวดหมู่ -->
         <div class="flex flex-wrap justify-center gap-3 mb-10" data-aos="fade-up" data-aos-delay="100">
             <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2 rounded-full border-2 border-orange-500 bg-orange-500 text-white font-medium transition" data-i18n="catAll">ทั้งหมด</button>
             <button onclick="filterCategory('sauce')" class="cat-btn px-5 py-2 rounded-full border-2 border-orange-500 text-orange-600 dark:text-orange-400 hover:bg-orange-500 hover:text-white font-medium transition" data-i18n="catSauce">ซอสปรุงรส</button>
@@ -90,7 +121,7 @@
         </div>
 
         <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-            <!-- สินค้า -->
+            <!-- สินค้าจะถูกสร้างด้วย JS -->
         </div>
     </div>
 
@@ -113,7 +144,6 @@
         </div>
         
         <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4 text-gray-800 dark:text-gray-200">
-            <!-- รายการในตะกร้า -->
             <p class="text-center text-gray-500 dark:text-gray-400 mt-10" data-i18n="cartEmpty">ตะกร้าของคุณยังว่างเปล่า</p>
         </div>
 
@@ -123,9 +153,27 @@
                 <span id="cart-total-price" class="text-2xl font-bold text-orange-600 dark:text-orange-400">฿0</span>
             </div>
             <button onclick="checkoutLine()" class="w-full flex items-center justify-center px-4 py-3 rounded-xl text-white font-bold bg-[#00B900] hover:bg-[#009900] transition transform hover:scale-105 active:scale-95 shadow-lg">
-                <svg class="w-6 h-6 mr-2 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992z..."/></svg>
+                <svg class="w-6 h-6 mr-2 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992zm-15.65 1.564c0 .285-.231.516-.516.516H5.215c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v3.88h2.087c.285 0 .516.231.516.516zM10.8 11.868c0 .285-.231.516-.516.516H9.197c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v4.396zm3.435-4.396c0 .285-.231.516-.516.516h-1.014v1.36h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.014v1.361h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.53c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516h1.53c.285 0 .516.231.516.516zm5.05 4.396c0 .285-.231.516-.516.516h-1.53c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v1.36h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.014v1.361h1.014c.285 0 .516.231.516.516z"/></svg>
                 <span data-i18n="btnCheckout">สั่งซื้อเลยผ่าน LINE</span>
             </button>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Promo Popup (โปรโมชั่น) -->
+    <div id="promo-popup" class="fixed inset-0 z-[200] bg-black bg-opacity-70 flex items-center justify-center hidden opacity-0 transition-opacity duration-500 px-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform scale-95 transition-transform duration-500 relative" id="promo-content">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Promotion">
+                <button onclick="closePopup()" class="absolute top-3 right-3 bg-black bg-opacity-60 text-white rounded-full p-2 hover:bg-opacity-90 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 text-center">
+                <h3 class="text-2xl font-bold text-orange-600 mb-2" data-i18n="promoTitle">🔥 โปรโมชั่นลูกค้าใหม่!</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6" data-i18n="promoDesc">สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!</p>
+                <button onclick="closePopup()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition" data-i18n="promoBtn">เลือกซื้อสินค้าเลย</button>
+            </div>
         </div>
     </div>
 
@@ -148,12 +196,8 @@
         </div>
     </footer>
 
-    <!-- Overlay Background for Sidebar -->
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // บังคับโหลดกลับไปบนสุด
         history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
 
@@ -161,39 +205,41 @@
         let currentLang = 'th';
         let currentCategory = 'all';
         let cart = [];
-        let typedTitle, typedSubtitle;
 
-        // คำแปล
+        // ข้อมูลแปลภาษา (เพิ่มส่วน About & Promo)
         const translations = {
             th: {
                 loadingSite: "กำลังเตรียมความอร่อย...",
-                navHome: "หน้าแรก", navProducts: "สินค้าของเรา",
+                topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี",
+                navAbout: "เกี่ยวกับเรา", navProducts: "สินค้าของเรา",
+                heroTitle: "อร่อยง่ายๆ สไตล์", heroDesc: "ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย",
+                aboutHistoryTitle: "ความเป็นมา", aboutHistoryDesc: "เริ่มต้นจากสูตรลับก้นครัว สู่ผลิตภัณฑ์พรีเมียมที่ส่งมอบความอร่อยถึงมือคุณในทุกมื้อมาอย่างยาวนาน",
+                aboutStandardTitle: "มาตรฐานระดับสากล", aboutStandardDesc: "โรงงานผลิตด้วยกรรมวิธีที่สะอาด ปลอดภัย ผ่านการรับรองมาตรฐานสากล GMP และ HACCP",
+                aboutAwardTitle: "รางวัลการันตี", aboutAwardDesc: "สุดยอดรสชาติแห่งปี รางวัลผลิตภัณฑ์อาหารดีเด่น 3 ปีซ้อนจากสถาบันรับรองคุณภาพอาหาร",
                 productTitle: "สินค้าของเรา",
-                companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด",
-                companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000",
-                contactUs: "ติดต่อเรา",
-                btnAdd: "เพิ่มลงตะกร้า",
                 catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน",
-                cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า",
-                cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE",
+                btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE",
+                companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา",
+                promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย",
                 langToggleBtn: "EN"
             },
             en: {
                 loadingSite: "Preparing deliciousness...",
-                navHome: "Home", navProducts: "Our Products",
+                topBarText: "🏆 Award Winning | 🏭 GMP & HACCP Certified | 📖 10+ Years of History",
+                navAbout: "About Us", navProducts: "Our Products",
+                heroTitle: "Deliciously Easy with", heroDesc: "Premium sauces and ready-to-eat meals. Just open the cap and enjoy immediately. Safe and hygienic.",
+                aboutHistoryTitle: "Our History", aboutHistoryDesc: "Started from a secret recipe, now delivering premium deliciousness to every meal.",
+                aboutStandardTitle: "Global Standards", aboutStandardDesc: "Clean and safe manufacturing process, certified by GMP and HACCP standards.",
+                aboutAwardTitle: "Guaranteed Awards", aboutAwardDesc: "Taste of the Year and Outstanding Food Product Award for 3 consecutive years.",
                 productTitle: "Our Products",
-                companyName: "DP All Delicious Products All Co., Ltd.",
-                companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000",
-                contactUs: "Contact Us",
-                btnAdd: "Add to Cart",
                 catAll: "All", catSauce: "Sauces", catFood: "Ready-to-eat",
-                cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty",
-                cartTotal: "Total:", btnCheckout: "Checkout via LINE",
+                btnAdd: "Add to Cart", cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty", cartTotal: "Total:", btnCheckout: "Checkout via LINE",
+                companyName: "DP All Delicious Products All Co., Ltd.", companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000", contactUs: "Contact Us",
+                promoTitle: "🔥 New Customer Promo!", promoDesc: "Order over 500 THB today, get FREE shipping & 50 THB instant discount!", promoBtn: "Shop Now",
                 langToggleBtn: "TH"
             }
         };
 
-        // ข้อมูลสินค้า (รวม 9 ตัว)
         const products = [
             { id: 1, category: "sauce", name: { th: "ซอสผัดกะเพราสูตรเข้มข้น", en: "Intense Holy Basil Stir-fry Sauce" }, description: { th: "ไม่ต้องปรุงเพิ่ม แค่ผัดกับเนื้อสัตว์ก็อร่อย", en: "No extra seasoning needed." }, price: 89, image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80" },
             { id: 2, category: "sauce", name: { th: "น้ำจิ้มสุกี้โบราณ dpAlLL", en: "Traditional Suki Sauce" }, description: { th: "รสชาติกลมกล่อม หอมงาเตะจมูก", en: "Mellow flavor with sesame scent." }, price: 99, image: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=500&q=80" },
@@ -206,53 +252,23 @@
             { id: 9, category: "food", name: { th: "สปาเก็ตตี้ซอสมะเขือเทศ", en: "Spaghetti Tomato Sauce" }, description: { th: "เส้นเหนียวนุ่ม ซอสเข้มข้นสไตล์อิตาเลียน", en: "Al dente pasta with rich Italian sauce." }, price: 65, image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=500&q=80" }
         ];
 
-        // ลูกเล่น Typed.js พิมพ์ข้อความ
-        function initTyped() {
-            if (typedTitle) typedTitle.destroy();
-            if (typedSubtitle) typedSubtitle.destroy();
-
-            const titleStrings = currentLang === 'th' ? 
-                ['อร่อยง่ายๆ สไตล์ <span class="text-orange-600">dpAlLL</span>', 'รสชาติพรีเมียม สไตล์ <span class="text-orange-600">dpAlLL</span>'] : 
-                ['Deliciously Easy with <span class="text-orange-600">dpAlLL</span>', 'Premium Taste by <span class="text-orange-600">dpAlLL</span>'];
-            
-            const subtitleStrings = currentLang === 'th' ? 
-                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
-                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
-
-            typedTitle = new Typed('#typed-title', {
-                strings: titleStrings,
-                typeSpeed: 60, backSpeed: 40, backDelay: 2000, loop: true, showCursor: true, cursorChar: '|'
-            });
-
-            typedSubtitle = new Typed('#typed-subtitle', {
-                strings: subtitleStrings,
-                typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false
-            });
-        }
-
-        // กรองสินค้าตามหมวดหมู่
         window.filterCategory = function(category) {
             currentCategory = category;
-            
-            // เปลี่ยนสีปุ่มที่ถูกเลือก
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 btn.classList.remove('bg-orange-500', 'text-white');
                 btn.classList.add('text-orange-600', 'dark:text-orange-400', 'bg-transparent');
             });
             event.target.classList.remove('text-orange-600', 'dark:text-orange-400', 'bg-transparent');
             event.target.classList.add('bg-orange-500', 'text-white');
-
             renderProducts();
         }
 
-        // เรนเดอร์สินค้า
         function renderProducts() {
             const container = document.getElementById('product-container');
             container.innerHTML = ''; 
-
             const filteredProducts = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
 
-            filteredProducts.forEach((product, index) => {
+            filteredProducts.forEach(product => {
                 const card = `
                     <div data-aos="fade-up" class="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl overflow-hidden transform transition duration-500 border border-gray-100 dark:border-gray-700 flex flex-col h-full">
                         <div class="relative overflow-hidden group h-48 sm:h-56">
@@ -273,39 +289,28 @@
                 `;
                 container.innerHTML += card;
             });
-            // กระตุ้น AOS อีกครั้งหลังเพิ่ม DOM
             setTimeout(() => AOS.refresh(), 100);
         }
 
-        // ระบบตะกร้า
+        // Cart Logic
         window.addToCart = function(id) {
             const product = products.find(p => p.id === id);
             const existingItem = cart.find(item => item.id === id);
-            
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
+            if (existingItem) existingItem.qty += 1;
+            else cart.push({ ...product, qty: 1 });
             updateCartUI();
             
-            // เด้งไอคอนตะกร้าให้รู้ว่าเข้าแล้ว
             const cartBtn = document.querySelector('.fixed.bottom-6');
             cartBtn.classList.add('scale-125');
             setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
-        }
-
-        window.removeFromCart = function(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCartUI();
         }
 
         window.updateQty = function(id, change) {
             const item = cart.find(i => i.id === id);
             if (item) {
                 item.qty += change;
-                if (item.qty <= 0) removeFromCart(id);
-                else updateCartUI();
+                if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+                updateCartUI();
             }
         }
 
@@ -314,8 +319,7 @@
             const badge = document.getElementById('cart-badge');
             const totalEl = document.getElementById('cart-total-price');
             
-            let total = 0;
-            let totalQty = 0;
+            let total = 0, totalQty = 0;
             cartContainer.innerHTML = '';
 
             if (cart.length === 0) {
@@ -333,9 +337,9 @@
                                 <p class="text-orange-500 font-medium">฿${item.price}</p>
                             </div>
                             <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                <button onclick="updateQty(${item.id}, -1)" class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:text-red-500">-</button>
+                                <button onclick="updateQty(${item.id}, -1)" class="px-2 py-1 hover:text-red-500">-</button>
                                 <span class="px-2 text-sm font-bold w-6 text-center">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:text-green-500">+</button>
+                                <button onclick="updateQty(${item.id}, 1)" class="px-2 py-1 hover:text-green-500">+</button>
                             </div>
                         </div>
                     `;
@@ -346,30 +350,44 @@
         }
 
         window.toggleCart = function() {
-            const sidebar = document.getElementById('cart-sidebar');
-            const overlay = document.getElementById('cart-overlay');
-            sidebar.classList.toggle('translate-x-full');
-            overlay.classList.toggle('hidden');
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+            document.getElementById('cart-overlay').classList.toggle('hidden');
         }
 
-        // จัดส่งออเดอร์เข้า LINE
         window.checkoutLine = function() {
             if (cart.length === 0) return alert(currentLang === 'th' ? "ตะกร้าว่างเปล่าครับ" : "Your cart is empty");
-            
             let msg = currentLang === 'th' ? "🛒 รายการสั่งซื้อ dpAlLL\n\n" : "🛒 dpAlLL Order\n\n";
             let total = 0;
-            
             cart.forEach(item => {
                 msg += `- ${item.name[currentLang]} (x${item.qty}) : ฿${item.price * item.qty}\n`;
                 total += item.price * item.qty;
             });
-            
             msg += `\n💰 ${translations[currentLang].cartTotal} ฿${total}`;
-            const lineUrl = `https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(msg)}`;
-            window.open(lineUrl, '_blank');
+            window.open(`https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // แปลภาษา
+        // Popup Logic
+        function showPromoPopup() {
+            if (!sessionStorage.getItem('promoShown')) {
+                const popup = document.getElementById('promo-popup');
+                const content = document.getElementById('promo-content');
+                popup.classList.remove('hidden');
+                void popup.offsetWidth; // trigger reflow
+                popup.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                sessionStorage.setItem('promoShown', 'true');
+            }
+        }
+
+        window.closePopup = function() {
+            const popup = document.getElementById('promo-popup');
+            const content = document.getElementById('promo-content');
+            popup.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => popup.classList.add('hidden'), 500);
+        }
+
+        // Translation Logic
         function updatePageLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
@@ -378,7 +396,6 @@
             document.getElementById('lang-toggle').innerText = translations[currentLang].langToggleBtn;
             renderProducts();
             updateCartUI();
-            initTyped(); // รีสตาร์ท Typing
         }
 
         document.getElementById('lang-toggle').addEventListener('click', () => {
@@ -386,16 +403,14 @@
             updatePageLanguage();
         });
 
-        // โหมด Dark/Light
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        function toggleTheme() {
+        // Theme Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
             document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden');
             document.getElementById('theme-toggle-light-icon').classList.toggle('hidden');
             document.documentElement.classList.toggle('dark');
-        }
-        themeToggleBtn.addEventListener('click', toggleTheme);
+        });
 
-        // โหลดเสร็จสิ้น
+        // Init Load
         window.addEventListener('load', () => {
             updatePageLanguage();
             AOS.init({ once: true, offset: 50 });
@@ -406,7 +421,7 @@
                 setTimeout(() => {
                     preloader.style.display = 'none';
                     document.body.classList.remove('loading');
-                    initTyped(); // เริ่มลูกเล่นพิมพ์อักษรหลังจากหน้าโหลดหายไป
+                    showPromoPopup(); // เรียก popup หลังโหลดหน้าเสร็จ
                 }, 700);
             }, 1000); 
         });
