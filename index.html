@@ -68,8 +68,7 @@
             <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                 <span data-i18n="heroTitle">อร่อยง่ายๆ สไตล์</span> <span class="text-orange-600 drop-shadow-md">dpAlLL</span>
             </h2>
-            <p class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="heroDesc">
-                ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย
+            <p id="typed-subtitle" class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto h-20 sm:h-16">
             </p>
         </div>
     </div>
@@ -345,7 +344,12 @@
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
-                setTimeout(() => { preloader.style.display = 'none'; document.body.classList.remove('loading'); showPromoPopup(); initTyped(); }, 700);
+                setTimeout(() => { 
+                    preloader.style.display = 'none'; 
+                    document.body.classList.remove('loading');
+                    initTyped(); 
+                    showPromoPopup(); 
+                }, 700);
             }, 1000); 
         });
     </script>
