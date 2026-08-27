@@ -7,17 +7,17 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: { extend: { fontFamily: { sans: ['Prompt', 'sans-serif'], } } }
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Prompt', 'sans-serif'], } } } }
+        // เช็คธีมตั้งแต่เริ่มโหลดหน้าเว็บเพื่อป้องกันการกระพริบ
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- นำ Typed.js กลับมาใช้งาน -->
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     
     <style>
         body.loading { overflow: hidden; }
@@ -49,9 +49,7 @@
                     <h1 class="text-3xl font-bold text-orange-600 tracking-wider">dpAlLL</h1>
                 </div>
                 <div class="flex items-center space-x-1 sm:space-x-4">
-                    <!-- ลิงก์ไปหน้า about.html -->
                     <a href="about.html" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navAbout">เกี่ยวกับเรา</a>
-                    <a href="#products" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navProducts">สินค้าของเรา</a>
                     
                     <button id="lang-toggle" class="ml-2 px-3 py-1.5 border border-orange-500 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 font-medium smooth-transition shadow-sm">EN</button>
                     <button id="theme-toggle" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg smooth-transition">
@@ -63,14 +61,16 @@
         </div>
     </nav>
 
-    <!-- Hero Section สำหรับแสดง Typed.js -->
+    <!-- Hero Section (ข้อความนิ่ง) -->
     <div class="relative bg-orange-100 dark:bg-gray-800 py-20 sm:py-28 overflow-hidden smooth-transition">
         <div class="absolute top-0 left-0 w-full h-full opacity-10 dark:opacity-5 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in" data-aos-duration="1000">
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight h-16 sm:h-20">
-                <span id="typed-title" class="text-orange-600 drop-shadow-md"></span>
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                <span data-i18n="heroTitle">อร่อยง่ายๆ สไตล์</span> <span class="text-orange-600 drop-shadow-md">dpAlLL</span>
             </h2>
-            <p id="typed-subtitle" class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto h-20 sm:h-16"></p>
+            <p class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="heroDesc">
+                ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย
+            </p>
         </div>
     </div>
 
@@ -150,14 +150,15 @@
         window.scrollTo(0, 0);
 
         const LINE_ID = "@dpall_shop"; 
-        let currentLang = 'th';
+        
+        // ดึงค่าภาษาจากเครื่อง ถ้าไม่มีให้เริ่มที่ 'th'
+        let currentLang = localStorage.getItem('lang') || 'th';
         let currentCategory = 'all';
         let cart = [];
-        let typedTitle, typedSubtitle;
 
         const translations = {
-            th: { loadingSite: "กำลังเตรียมความอร่อย...", topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี", navAbout: "เกี่ยวกับเรา", navProducts: "สินค้าของเรา", productTitle: "สินค้าของเรา", catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน", btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE", companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา", promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย", langToggleBtn: "EN" },
-            en: { loadingSite: "Preparing deliciousness...", topBarText: "🏆 Award Winning | 🏭 GMP & HACCP Certified | 📖 10+ Years of History", navAbout: "About Us", navProducts: "Our Products", productTitle: "Our Products", catAll: "All", catSauce: "Sauces", catFood: "Ready-to-eat", btnAdd: "Add to Cart", cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty", cartTotal: "Total:", btnCheckout: "Checkout via LINE", companyName: "DP All Delicious Products All Co., Ltd.", companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000", contactUs: "Contact Us", promoTitle: "🔥 New Customer Promo!", promoDesc: "Order over 500 THB today, get FREE shipping & 50 THB instant discount!", promoBtn: "Shop Now", langToggleBtn: "TH" }
+            th: { loadingSite: "กำลังเตรียมความอร่อย...", topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี", navAbout: "เกี่ยวกับเรา", heroTitle: "อร่อยง่ายๆ สไตล์", heroDesc: "ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย", productTitle: "สินค้าของเรา", catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน", btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE", companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา", promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย", langToggleBtn: "EN" },
+            en: { loadingSite: "Preparing deliciousness...", topBarText: "🏆 Award Winning | 🏭 GMP & HACCP Certified | 📖 10+ Years of History", navAbout: "About Us", heroTitle: "Deliciously Easy with", heroDesc: "Premium sauces and ready-to-eat meals. Just open the cap and enjoy immediately. Safe and hygienic.", productTitle: "Our Products", catAll: "All", catSauce: "Sauces", catFood: "Ready-to-eat", btnAdd: "Add to Cart", cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty", cartTotal: "Total:", btnCheckout: "Checkout via LINE", companyName: "DP All Delicious Products All Co., Ltd.", companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000", contactUs: "Contact Us", promoTitle: "🔥 New Customer Promo!", promoDesc: "Order over 500 THB today, get FREE shipping & 50 THB instant discount!", promoBtn: "Shop Now", langToggleBtn: "TH" }
         };
 
         const products = [
@@ -171,23 +172,6 @@
             { id: 8, category: "food", name: { th: "ข้าวไก่กระเทียม (พร้อมทาน)", en: "Garlic Chicken Rice (Ready to eat)" }, description: { th: "อุ่นไมโครเวฟ 2 นาที พร้อมทานทันที", en: "Microwave for 2 mins and it's ready!" }, price: 55, image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=80" },
             { id: 9, category: "food", name: { th: "สปาเก็ตตี้ซอสมะเขือเทศ", en: "Spaghetti Tomato Sauce" }, description: { th: "เส้นเหนียวนุ่ม ซอสเข้มข้นสไตล์อิตาเลียน", en: "Al dente pasta with rich Italian sauce." }, price: 65, image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=500&q=80" }
         ];
-
-        // ลูกเล่น Typed.js
-        function initTyped() {
-            if (typedTitle) typedTitle.destroy();
-            if (typedSubtitle) typedSubtitle.destroy();
-            
-            const titleStrings = currentLang === 'th' ? 
-                ['อร่อยง่ายๆ สไตล์ <span class="text-orange-600">dpAlLL</span>', 'รสชาติพรีเมียม สไตล์ <span class="text-orange-600">dpAlLL</span>'] : 
-                ['Deliciously Easy with <span class="text-orange-600">dpAlLL</span>', 'Premium Taste by <span class="text-orange-600">dpAlLL</span>'];
-
-            const subtitleStrings = currentLang === 'th' ? 
-                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
-                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
-
-            typedTitle = new Typed('#typed-title', { strings: titleStrings, typeSpeed: 60, backSpeed: 40, backDelay: 2000, loop: true, showCursor: true, cursorChar: '|' });
-            typedSubtitle = new Typed('#typed-subtitle', { strings: subtitleStrings, typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false });
-        }
 
         window.filterCategory = function(category) {
             currentCategory = category;
@@ -309,18 +293,40 @@
                 if (translations[currentLang][key]) element.innerHTML = translations[currentLang][key];
             });
             document.getElementById('lang-toggle').innerText = translations[currentLang].langToggleBtn;
-            renderProducts(); updateCartUI(); initTyped();
+            renderProducts(); 
+            updateCartUI(); 
+            
+            // อัปเดตสถานะไอคอนโหมด
+            if (document.documentElement.classList.contains('dark')) {
+                document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
+                document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
+            }
         }
 
-        document.getElementById('lang-toggle').addEventListener('click', () => { currentLang = currentLang === 'th' ? 'en' : 'th'; updatePageLanguage(); });
+        // กดเปลี่ยนภาษา
+        document.getElementById('lang-toggle').addEventListener('click', () => { 
+            currentLang = currentLang === 'th' ? 'en' : 'th'; 
+            localStorage.setItem('lang', currentLang); // จำค่าลงเครื่อง
+            updatePageLanguage(); 
+        });
+
+        // กดเปลี่ยนโหมดสี
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden');
             document.getElementById('theme-toggle-light-icon').classList.toggle('hidden');
-            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light'); // จำค่าลงเครื่อง
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark'); // จำค่าลงเครื่อง
+            }
         });
 
         window.addEventListener('load', () => {
-            updatePageLanguage(); AOS.init({ once: true, offset: 50 });
+            updatePageLanguage(); 
+            AOS.init({ once: true, offset: 50 });
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
