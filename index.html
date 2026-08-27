@@ -291,6 +291,24 @@
             });
             setTimeout(() => AOS.refresh(), 100);
         }
+        function initTyped() {
+            if (typedTitle) typedTitle.destroy();
+            if (typedSubtitle) typedSubtitle.destroy();
+            
+            const subtitleStrings = currentLang === 'th' ? 
+                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
+                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
+
+            typedTitle = new Typed('#typed-title', {
+                strings: titleStrings,
+                typeSpeed: 60, backSpeed: 40, backDelay: 2000, loop: true, showCursor: true, cursorChar: '|'
+            });
+
+            typedSubtitle = new Typed('#typed-subtitle', {
+                strings: subtitleStrings,
+                typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false
+            });
+        }
 
         // Cart Logic
         window.addToCart = function(id) {
