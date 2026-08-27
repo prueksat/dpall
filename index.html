@@ -174,12 +174,11 @@
         ];
         function initTyped() {
             if (typedSubtitle) typedSubtitle.destroy();
-
+            
             const subtitleStrings = currentLang === 'th' ? 
                 ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
                 ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
-
-
+            
             typedSubtitle = new Typed('#typed-subtitle', {
                 strings: subtitleStrings,
                 typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false
