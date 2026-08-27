@@ -1,9 +1,65 @@
-<!-- JavaScript สำหรับจำลองข้อมูลและจัดการปุ่ม LINE -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dpAlLL - อาหารสำเร็จรูปและซอสพรีเมียม</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-3xl font-bold text-orange-600 tracking-wider">dpAlLL</h1>
+                </div>
+                <div>
+                    <a href="#" class="text-gray-600 hover:text-orange-600 px-3 py-2 rounded-md font-medium">หน้าแรก</a>
+                    <a href="#products" class="text-gray-600 hover:text-orange-600 px-3 py-2 rounded-md font-medium">สินค้าของเรา</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-orange-100 py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                อร่อยง่ายๆ สไตล์ <span class="text-orange-600">dpAlLL</span>
+            </h2>
+            <p class="mt-4 text-xl text-gray-600">
+                ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที
+            </p>
+        </div>
+    </div>
+
+    <!-- Product Section -->
+    <div id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center border-b-2 border-orange-200 pb-4 inline-block">สินค้าแนะนำ</h3>
+        
+        <!-- กล่องที่โค้ดพยายามหา (product-container) อยู่ตรงนี้ครับ -->
+        <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+            <div class="text-center w-full col-span-full text-gray-500">กำลังโหลดรายการสินค้า...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2026 dpAlLL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript สำหรับจำลองข้อมูลและจัดการปุ่ม LINE -->
     <script>
-        // เปลี่ยนเป็นไอดี LINE Official ของร้านคุณ (ต้องมี @ นำหน้า)
         const LINE_ID = "@dpall_shop"; 
 
-        // จำลองข้อมูลสินค้า (ไม่ต้องพึ่ง Backend)
         const products = [
             {
                 id: 1,
@@ -33,11 +89,10 @@
 
         function loadProducts() {
             const container = document.getElementById('product-container');
-            container.innerHTML = ''; // ล้างข้อความ Loading
+            container.innerHTML = ''; 
 
             products.forEach(product => {
                 const lineUrl = `https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(product.lineMessage)}`;
-
                 const card = `
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
                         <img class="h-48 w-full object-cover" src="${product.image}" alt="${product.name}">
@@ -58,6 +113,7 @@
             });
         }
 
-        // โหลดข้อมูลเมื่อเปิดหน้าเว็บ
         window.addEventListener('DOMContentLoaded', loadProducts);
     </script>
+</body>
+</html>
