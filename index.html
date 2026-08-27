@@ -155,6 +155,7 @@
         let currentLang = localStorage.getItem('lang') || 'th';
         let currentCategory = 'all';
         let cart = [];
+        let typedSubtitle;
 
         const translations = {
             th: { loadingSite: "กำลังเตรียมความอร่อย...", topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี", navAbout: "เกี่ยวกับเรา", heroTitle: "อร่อยง่ายๆ สไตล์", heroDesc: "ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย", productTitle: "สินค้าของเรา", catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน", btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE", companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา", promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย", langToggleBtn: "EN" },
@@ -172,6 +173,19 @@
             { id: 8, category: "food", name: { th: "ข้าวไก่กระเทียม (พร้อมทาน)", en: "Garlic Chicken Rice (Ready to eat)" }, description: { th: "อุ่นไมโครเวฟ 2 นาที พร้อมทานทันที", en: "Microwave for 2 mins and it's ready!" }, price: 55, image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=80" },
             { id: 9, category: "food", name: { th: "สปาเก็ตตี้ซอสมะเขือเทศ", en: "Spaghetti Tomato Sauce" }, description: { th: "เส้นเหนียวนุ่ม ซอสเข้มข้นสไตล์อิตาเลียน", en: "Al dente pasta with rich Italian sauce." }, price: 65, image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=500&q=80" }
         ];
+        function initTyped() {
+            if (typedSubtitle) typedSubtitle.destroy();
+
+            const subtitleStrings = currentLang === 'th' ? 
+                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
+                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
+
+
+            typedSubtitle = new Typed('#typed-subtitle', {
+                strings: subtitleStrings,
+                typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false
+            });
+        }
 
         window.filterCategory = function(category) {
             currentCategory = category;
@@ -295,6 +309,7 @@
             document.getElementById('lang-toggle').innerText = translations[currentLang].langToggleBtn;
             renderProducts(); 
             updateCartUI(); 
+            initTyped();
             
             // อัปเดตสถานะไอคอนโหมด
             if (document.documentElement.classList.contains('dark')) {
@@ -330,7 +345,7 @@
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
-                setTimeout(() => { preloader.style.display = 'none'; document.body.classList.remove('loading'); showPromoPopup(); }, 700);
+                setTimeout(() => { preloader.style.display = 'none'; document.body.classList.remove('loading'); showPromoPopup(); initTyped(); }, 700);
             }, 1000); 
         });
     </script>
