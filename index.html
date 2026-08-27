@@ -5,22 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dpAlLL - อาหารสำเร็จรูปและซอสพรีเมียม</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: { fontFamily: { sans: ['Prompt', 'sans-serif'], } }
-            }
+            theme: { extend: { fontFamily: { sans: ['Prompt', 'sans-serif'], } } }
         }
     </script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- นำ Typed.js กลับมาใช้งาน -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     
     <style>
         body.loading { overflow: hidden; }
@@ -31,7 +28,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 smooth-transition loading relative">
 
-    <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-[300] bg-white dark:bg-gray-900 flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="animate-bounce mb-4">
             <h1 class="text-6xl font-extrabold text-orange-600 tracking-widest drop-shadow-lg">dpAlLL</h1>
@@ -40,7 +36,7 @@
         <p class="mt-4 text-gray-500 dark:text-gray-400 font-medium tracking-wide animate-pulse" data-i18n="loadingSite">กำลังเตรียมความอร่อย...</p>
     </div>
 
-    <!-- Top Announcement Bar (ด้านบนสุด) -->
+    <!-- Top Bar -->
     <div class="bg-gray-900 text-white text-xs sm:text-sm py-2 px-4 text-center z-50 relative">
         <span data-i18n="topBarText">🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี</span>
     </div>
@@ -53,7 +49,8 @@
                     <h1 class="text-3xl font-bold text-orange-600 tracking-wider">dpAlLL</h1>
                 </div>
                 <div class="flex items-center space-x-1 sm:space-x-4">
-                    <a href="#about" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navAbout">เกี่ยวกับเรา</a>
+                    <!-- ลิงก์ไปหน้า about.html -->
+                    <a href="about.html" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navAbout">เกี่ยวกับเรา</a>
                     <a href="#products" class="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 px-3 py-2 rounded-md font-medium smooth-transition" data-i18n="navProducts">สินค้าของเรา</a>
                     
                     <button id="lang-toggle" class="ml-2 px-3 py-1.5 border border-orange-500 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 font-medium smooth-transition shadow-sm">EN</button>
@@ -66,93 +63,47 @@
         </div>
     </nav>
 
-    <!-- Hero Section (ข้อความนิ่ง) -->
-    <div class="relative bg-orange-100 dark:bg-gray-800 py-16 sm:py-24 overflow-hidden smooth-transition">
+    <!-- Hero Section สำหรับแสดง Typed.js -->
+    <div class="relative bg-orange-100 dark:bg-gray-800 py-20 sm:py-28 overflow-hidden smooth-transition">
         <div class="absolute top-0 left-0 w-full h-full opacity-10 dark:opacity-5 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in" data-aos-duration="1000">
-            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                <span data-i18n="heroTitle">อร่อยง่ายๆ สไตล์</span> <span class="text-orange-600 drop-shadow-md">dpAlLL</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight h-16 sm:h-20">
+                <span id="typed-title" class="text-orange-600 drop-shadow-md"></span>
             </h2>
-            <p class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="heroDesc">
-                ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย
-            </p>
+            <p id="typed-subtitle" class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto h-20 sm:h-16"></p>
         </div>
     </div>
 
-    <!-- About & Standards Section -->
-    <div id="about" class="bg-white dark:bg-gray-900 py-16 border-b border-gray-100 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-                <div data-aos="fade-up" data-aos-delay="0">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutHistoryTitle">ความเป็นมา</h4>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutHistoryDesc">เริ่มต้นจากสูตรลับก้นครัว สู่ผลิตภัณฑ์พรีเมียมที่ส่งมอบความอร่อยถึงมือคุณในทุกมื้อมาอย่างยาวนาน</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutStandardTitle">มาตรฐานระดับสากล</h4>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutStandardDesc">โรงงานผลิตด้วยกรรมวิธีที่สะอาด ปลอดภัย ผ่านการรับรองมาตรฐานสากล GMP และ HACCP</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 text-orange-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold dark:text-white mb-2" data-i18n="aboutAwardTitle">รางวัลการันตี</h4>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="aboutAwardDesc">สุดยอดรสชาติแห่งปี รางวัลผลิตภัณฑ์อาหารดีเด่น 3 ปีซ้อนจากสถาบันรับรองคุณภาพอาหาร</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Section & Categories -->
+    <!-- Product Section -->
     <div id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center mb-8" data-aos="fade-up">
             <h3 class="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-orange-500 pb-2 inline-block" data-i18n="productTitle">สินค้าของเรา</h3>
         </div>
-        
         <div class="flex flex-wrap justify-center gap-3 mb-10" data-aos="fade-up" data-aos-delay="100">
             <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2 rounded-full border-2 border-orange-500 bg-orange-500 text-white font-medium transition" data-i18n="catAll">ทั้งหมด</button>
             <button onclick="filterCategory('sauce')" class="cat-btn px-5 py-2 rounded-full border-2 border-orange-500 text-orange-600 dark:text-orange-400 hover:bg-orange-500 hover:text-white font-medium transition" data-i18n="catSauce">ซอสปรุงรส</button>
             <button onclick="filterCategory('food')" class="cat-btn px-5 py-2 rounded-full border-2 border-orange-500 text-orange-600 dark:text-orange-400 hover:bg-orange-500 hover:text-white font-medium transition" data-i18n="catFood">อาหารพร้อมทาน</button>
         </div>
-
-        <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-            <!-- สินค้าจะถูกสร้างด้วย JS -->
-        </div>
+        <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6"></div>
     </div>
 
-    <!-- Floating Cart Button -->
+    <!-- Cart Items & Popup -->
     <button onclick="toggleCart()" class="fixed bottom-6 right-6 z-40 bg-orange-600 hover:bg-orange-700 text-white p-4 rounded-full shadow-2xl transform transition hover:scale-110 flex items-center justify-center">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z"></path></svg>
         <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full border-2 border-white dark:border-gray-900 hidden">0</span>
     </button>
-
-    <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-gray-800 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
         <div class="p-5 border-b dark:border-gray-700 flex justify-between items-center bg-orange-500 text-white">
             <h2 class="text-xl font-bold flex items-center">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z"></path></svg>
                 <span data-i18n="cartTitle">ตะกร้าสินค้า</span>
             </h2>
-            <button onclick="toggleCart()" class="text-white hover:text-gray-200">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-200"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
-        
-        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4 text-gray-800 dark:text-gray-200">
-            <p class="text-center text-gray-500 dark:text-gray-400 mt-10" data-i18n="cartEmpty">ตะกร้าของคุณยังว่างเปล่า</p>
-        </div>
-
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4 text-gray-800 dark:text-gray-200"></div>
         <div class="p-5 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-medium text-gray-700 dark:text-gray-300" data-i18n="cartTotal">ยอดรวม:</span>
-                <span id="cart-total-price" class="text-2xl font-bold text-orange-600 dark:text-orange-400">฿0</span>
-            </div>
-            <button onclick="checkoutLine()" class="w-full flex items-center justify-center px-4 py-3 rounded-xl text-white font-bold bg-[#00B900] hover:bg-[#009900] transition transform hover:scale-105 active:scale-95 shadow-lg">
+            <div class="flex justify-between items-center mb-4"><span class="text-lg font-medium text-gray-700 dark:text-gray-300" data-i18n="cartTotal">ยอดรวม:</span><span id="cart-total-price" class="text-2xl font-bold text-orange-600 dark:text-orange-400">฿0</span></div>
+            <button onclick="checkoutLine()" class="w-full flex items-center justify-center px-4 py-3 rounded-xl text-white font-bold bg-[#00B900] hover:bg-[#009900] transition transform hover:scale-105 shadow-lg">
                 <svg class="w-6 h-6 mr-2 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992zm-15.65 1.564c0 .285-.231.516-.516.516H5.215c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v3.88h2.087c.285 0 .516.231.516.516zM10.8 11.868c0 .285-.231.516-.516.516H9.197c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v4.396zm3.435-4.396c0 .285-.231.516-.516.516h-1.014v1.36h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.014v1.361h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.53c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516h1.53c.285 0 .516.231.516.516zm5.05 4.396c0 .285-.231.516-.516.516h-1.53c-.285 0-.516-.231-.516-.516V7.472c0-.285.231-.516.516-.516.285 0 .516.231.516.516v1.36h1.014c.285 0 .516.231.516.516 0 .285-.231.516-.516.516h-1.014v1.361h1.014c.285 0 .516.231.516.516z"/></svg>
                 <span data-i18n="btnCheckout">สั่งซื้อเลยผ่าน LINE</span>
             </button>
@@ -160,14 +111,12 @@
     </div>
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
-    <!-- Promo Popup (โปรโมชั่น) -->
+    <!-- Promo Popup -->
     <div id="promo-popup" class="fixed inset-0 z-[200] bg-black bg-opacity-70 flex items-center justify-center hidden opacity-0 transition-opacity duration-500 px-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform scale-95 transition-transform duration-500 relative" id="promo-content">
             <div class="relative">
                 <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Promotion">
-                <button onclick="closePopup()" class="absolute top-3 right-3 bg-black bg-opacity-60 text-white rounded-full p-2 hover:bg-opacity-90 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closePopup()" class="absolute top-3 right-3 bg-black bg-opacity-60 text-white rounded-full p-2 hover:bg-opacity-90"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <div class="p-6 text-center">
                 <h3 class="text-2xl font-bold text-orange-600 mb-2" data-i18n="promoTitle">🔥 โปรโมชั่นลูกค้าใหม่!</h3>
@@ -181,15 +130,14 @@
     <footer class="bg-gray-800 dark:bg-black text-gray-300 py-12 border-t-4 border-orange-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                <h1 class="text-3xl font-bold text-orange-500 mb-4 tracking-wider">dpAlLL</h1>
+                <h1 class="text-3xl font-bold text-orange-500 mb-4">dpAlLL</h1>
                 <p class="mb-2 font-medium" data-i18n="companyName">บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด</p>
                 <p class="text-sm leading-relaxed" data-i18n="companyAddress">602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000</p>
             </div>
             <div class="md:text-right flex flex-col justify-center">
                 <h4 class="text-lg font-semibold text-white mb-4" data-i18n="contactUs">ติดต่อเรา</h4>
                 <p class="text-sm flex items-center md:justify-end mb-2">
-                    <svg class="w-4 h-4 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                    Email: admin@dpall.co
+                    <svg class="w-4 h-4 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg> Email: admin@dpall.co
                 </p>
                 <p class="text-sm mt-8">&copy; 2026 dpAlLL. All rights reserved.</p>
             </div>
@@ -205,39 +153,11 @@
         let currentLang = 'th';
         let currentCategory = 'all';
         let cart = [];
+        let typedTitle, typedSubtitle;
 
-        // ข้อมูลแปลภาษา (เพิ่มส่วน About & Promo)
         const translations = {
-            th: {
-                loadingSite: "กำลังเตรียมความอร่อย...",
-                topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี",
-                navAbout: "เกี่ยวกับเรา", navProducts: "สินค้าของเรา",
-                heroTitle: "อร่อยง่ายๆ สไตล์", heroDesc: "ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย",
-                aboutHistoryTitle: "ความเป็นมา", aboutHistoryDesc: "เริ่มต้นจากสูตรลับก้นครัว สู่ผลิตภัณฑ์พรีเมียมที่ส่งมอบความอร่อยถึงมือคุณในทุกมื้อมาอย่างยาวนาน",
-                aboutStandardTitle: "มาตรฐานระดับสากล", aboutStandardDesc: "โรงงานผลิตด้วยกรรมวิธีที่สะอาด ปลอดภัย ผ่านการรับรองมาตรฐานสากล GMP และ HACCP",
-                aboutAwardTitle: "รางวัลการันตี", aboutAwardDesc: "สุดยอดรสชาติแห่งปี รางวัลผลิตภัณฑ์อาหารดีเด่น 3 ปีซ้อนจากสถาบันรับรองคุณภาพอาหาร",
-                productTitle: "สินค้าของเรา",
-                catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน",
-                btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE",
-                companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา",
-                promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย",
-                langToggleBtn: "EN"
-            },
-            en: {
-                loadingSite: "Preparing deliciousness...",
-                topBarText: "🏆 Award Winning | 🏭 GMP & HACCP Certified | 📖 10+ Years of History",
-                navAbout: "About Us", navProducts: "Our Products",
-                heroTitle: "Deliciously Easy with", heroDesc: "Premium sauces and ready-to-eat meals. Just open the cap and enjoy immediately. Safe and hygienic.",
-                aboutHistoryTitle: "Our History", aboutHistoryDesc: "Started from a secret recipe, now delivering premium deliciousness to every meal.",
-                aboutStandardTitle: "Global Standards", aboutStandardDesc: "Clean and safe manufacturing process, certified by GMP and HACCP standards.",
-                aboutAwardTitle: "Guaranteed Awards", aboutAwardDesc: "Taste of the Year and Outstanding Food Product Award for 3 consecutive years.",
-                productTitle: "Our Products",
-                catAll: "All", catSauce: "Sauces", catFood: "Ready-to-eat",
-                btnAdd: "Add to Cart", cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty", cartTotal: "Total:", btnCheckout: "Checkout via LINE",
-                companyName: "DP All Delicious Products All Co., Ltd.", companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000", contactUs: "Contact Us",
-                promoTitle: "🔥 New Customer Promo!", promoDesc: "Order over 500 THB today, get FREE shipping & 50 THB instant discount!", promoBtn: "Shop Now",
-                langToggleBtn: "TH"
-            }
+            th: { loadingSite: "กำลังเตรียมความอร่อย...", topBarText: "🏆 รางวัลผลิตภัณฑ์ดีเด่น | 🏭 มาตรฐานระดับสากล GMP & HACCP | 📖 ความเป็นมาบริษัทกว่า 10 ปี", navAbout: "เกี่ยวกับเรา", navProducts: "สินค้าของเรา", productTitle: "สินค้าของเรา", catAll: "ทั้งหมด", catSauce: "ซอสปรุงรส", catFood: "อาหารพร้อมทาน", btnAdd: "เพิ่มลงตะกร้า", cartTitle: "ตะกร้าสินค้า", cartEmpty: "ตะกร้าของคุณยังว่างเปล่า", cartTotal: "ยอดรวม:", btnCheckout: "สั่งซื้อเลยผ่าน LINE", companyName: "บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด", companyAddress: "602/10 ถนนทางรถไฟตะวันตก<br>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม<br>จ.นครปฐม 73000", contactUs: "ติดต่อเรา", promoTitle: "🔥 โปรโมชั่นลูกค้าใหม่!", promoDesc: "สั่งซื้อครบ 500 บาทวันนี้ จัดส่งฟรีทั่วประเทศ พร้อมรับส่วนลดทันที 50 บาท!", promoBtn: "เลือกซื้อสินค้าเลย", langToggleBtn: "EN" },
+            en: { loadingSite: "Preparing deliciousness...", topBarText: "🏆 Award Winning | 🏭 GMP & HACCP Certified | 📖 10+ Years of History", navAbout: "About Us", navProducts: "Our Products", productTitle: "Our Products", catAll: "All", catSauce: "Sauces", catFood: "Ready-to-eat", btnAdd: "Add to Cart", cartTitle: "Shopping Cart", cartEmpty: "Your cart is empty", cartTotal: "Total:", btnCheckout: "Checkout via LINE", companyName: "DP All Delicious Products All Co., Ltd.", companyAddress: "602/10 Railway West Road,<br>Phra Pathom Chedi, Mueang Nakhon Pathom,<br>Nakhon Pathom 73000", contactUs: "Contact Us", promoTitle: "🔥 New Customer Promo!", promoDesc: "Order over 500 THB today, get FREE shipping & 50 THB instant discount!", promoBtn: "Shop Now", langToggleBtn: "TH" }
         };
 
         const products = [
@@ -251,6 +171,23 @@
             { id: 8, category: "food", name: { th: "ข้าวไก่กระเทียม (พร้อมทาน)", en: "Garlic Chicken Rice (Ready to eat)" }, description: { th: "อุ่นไมโครเวฟ 2 นาที พร้อมทานทันที", en: "Microwave for 2 mins and it's ready!" }, price: 55, image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=80" },
             { id: 9, category: "food", name: { th: "สปาเก็ตตี้ซอสมะเขือเทศ", en: "Spaghetti Tomato Sauce" }, description: { th: "เส้นเหนียวนุ่ม ซอสเข้มข้นสไตล์อิตาเลียน", en: "Al dente pasta with rich Italian sauce." }, price: 65, image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=500&q=80" }
         ];
+
+        // ลูกเล่น Typed.js
+        function initTyped() {
+            if (typedTitle) typedTitle.destroy();
+            if (typedSubtitle) typedSubtitle.destroy();
+            
+            const titleStrings = currentLang === 'th' ? 
+                ['อร่อยง่ายๆ สไตล์ <span class="text-orange-600">dpAlLL</span>', 'รสชาติพรีเมียม สไตล์ <span class="text-orange-600">dpAlLL</span>'] : 
+                ['Deliciously Easy with <span class="text-orange-600">dpAlLL</span>', 'Premium Taste by <span class="text-orange-600">dpAlLL</span>'];
+
+            const subtitleStrings = currentLang === 'th' ? 
+                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
+                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
+
+            typedTitle = new Typed('#typed-title', { strings: titleStrings, typeSpeed: 60, backSpeed: 40, backDelay: 2000, loop: true, showCursor: true, cursorChar: '|' });
+            typedSubtitle = new Typed('#typed-subtitle', { strings: subtitleStrings, typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false });
+        }
 
         window.filterCategory = function(category) {
             currentCategory = category;
@@ -272,17 +209,14 @@
                 const card = `
                     <div data-aos="fade-up" class="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl overflow-hidden transform transition duration-500 border border-gray-100 dark:border-gray-700 flex flex-col h-full">
                         <div class="relative overflow-hidden group h-48 sm:h-56">
-                            <img class="w-full h-full object-cover transition duration-500 transform group-hover:scale-110" src="${product.image}" alt="${product.name[currentLang]}">
-                            <div class="absolute inset-0 bg-black bg-opacity-10 transition duration-500 opacity-0 group-hover:opacity-100"></div>
+                            <img class="w-full h-full object-cover transition duration-500 transform group-hover:scale-110" src="${product.image}">
                         </div>
                         <div class="p-5 flex flex-col flex-grow">
                             <h4 class="text-xl font-bold text-gray-900 dark:text-white line-clamp-1">${product.name[currentLang]}</h4>
                             <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 flex-grow line-clamp-2">${product.description[currentLang]}</p>
                             <div class="mt-4 flex items-center justify-between">
                                 <span class="text-2xl font-extrabold text-orange-600 dark:text-orange-400">฿${product.price}</span>
-                                <button onclick="addToCart(${product.id})" class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full shadow transition transform hover:scale-110" title="${translations[currentLang].btnAdd}">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                </button>
+                                <button onclick="addToCart(${product.id})" class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full shadow transition transform hover:scale-110"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button>
                             </div>
                         </div>
                     </div>
@@ -291,36 +225,13 @@
             });
             setTimeout(() => AOS.refresh(), 100);
         }
-        function initTyped() {
-            if (typedTitle) typedTitle.destroy();
-            if (typedSubtitle) typedSubtitle.destroy();
-            
-            const subtitleStrings = currentLang === 'th' ? 
-                ['ซอสปรุงรสและอาหารสำเร็จรูปคุณภาพระดับพรีเมียม', 'แค่เปิดฝาก็อร่อยได้ทันที ผลิตด้วยกรรมวิธีสะอาด ปลอดภัย'] : 
-                ['Premium sauces and ready-to-eat meals.', 'Just open the cap and enjoy immediately. Safe and hygienic.'];
 
-            typedTitle = new Typed('#typed-title', {
-                strings: titleStrings,
-                typeSpeed: 60, backSpeed: 40, backDelay: 2000, loop: true, showCursor: true, cursorChar: '|'
-            });
-
-            typedSubtitle = new Typed('#typed-subtitle', {
-                strings: subtitleStrings,
-                typeSpeed: 50, backSpeed: 30, backDelay: 3000, loop: true, showCursor: false
-            });
-        }
-
-        // Cart Logic
         window.addToCart = function(id) {
             const product = products.find(p => p.id === id);
             const existingItem = cart.find(item => item.id === id);
             if (existingItem) existingItem.qty += 1;
             else cart.push({ ...product, qty: 1 });
             updateCartUI();
-            
-            const cartBtn = document.querySelector('.fixed.bottom-6');
-            cartBtn.classList.add('scale-125');
-            setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
         }
 
         window.updateQty = function(id, change) {
@@ -336,7 +247,6 @@
             const cartContainer = document.getElementById('cart-items');
             const badge = document.getElementById('cart-badge');
             const totalEl = document.getElementById('cart-total-price');
-            
             let total = 0, totalQty = 0;
             cartContainer.innerHTML = '';
 
@@ -350,14 +260,9 @@
                     totalQty += item.qty;
                     cartContainer.innerHTML += `
                         <div class="flex items-center justify-between border-b dark:border-gray-700 pb-3">
-                            <div class="flex-1">
-                                <h5 class="text-sm font-bold truncate pr-2">${item.name[currentLang]}</h5>
-                                <p class="text-orange-500 font-medium">฿${item.price}</p>
-                            </div>
+                            <div class="flex-1"><h5 class="text-sm font-bold truncate pr-2">${item.name[currentLang]}</h5><p class="text-orange-500 font-medium">฿${item.price}</p></div>
                             <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                <button onclick="updateQty(${item.id}, -1)" class="px-2 py-1 hover:text-red-500">-</button>
-                                <span class="px-2 text-sm font-bold w-6 text-center">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" class="px-2 py-1 hover:text-green-500">+</button>
+                                <button onclick="updateQty(${item.id}, -1)" class="px-2 py-1 hover:text-red-500">-</button><span class="px-2 text-sm font-bold w-6 text-center">${item.qty}</span><button onclick="updateQty(${item.id}, 1)" class="px-2 py-1 hover:text-green-500">+</button>
                             </div>
                         </div>
                     `;
@@ -373,26 +278,20 @@
         }
 
         window.checkoutLine = function() {
-            if (cart.length === 0) return alert(currentLang === 'th' ? "ตะกร้าว่างเปล่าครับ" : "Your cart is empty");
+            if (cart.length === 0) return alert("ตะกร้าว่างเปล่าครับ");
             let msg = currentLang === 'th' ? "🛒 รายการสั่งซื้อ dpAlLL\n\n" : "🛒 dpAlLL Order\n\n";
             let total = 0;
-            cart.forEach(item => {
-                msg += `- ${item.name[currentLang]} (x${item.qty}) : ฿${item.price * item.qty}\n`;
-                total += item.price * item.qty;
-            });
+            cart.forEach(item => { msg += `- ${item.name[currentLang]} (x${item.qty}) : ฿${item.price * item.qty}\n`; total += item.price * item.qty; });
             msg += `\n💰 ${translations[currentLang].cartTotal} ฿${total}`;
             window.open(`https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // Popup Logic
         function showPromoPopup() {
             if (!sessionStorage.getItem('promoShown')) {
                 const popup = document.getElementById('promo-popup');
                 const content = document.getElementById('promo-content');
-                popup.classList.remove('hidden');
-                void popup.offsetWidth; // trigger reflow
-                popup.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
+                popup.classList.remove('hidden'); void popup.offsetWidth;
+                popup.classList.remove('opacity-0'); content.classList.remove('scale-95');
                 sessionStorage.setItem('promoShown', 'true');
             }
         }
@@ -400,47 +299,32 @@
         window.closePopup = function() {
             const popup = document.getElementById('promo-popup');
             const content = document.getElementById('promo-content');
-            popup.classList.add('opacity-0');
-            content.classList.add('scale-95');
+            popup.classList.add('opacity-0'); content.classList.add('scale-95');
             setTimeout(() => popup.classList.add('hidden'), 500);
         }
 
-        // Translation Logic
         function updatePageLanguage() {
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[currentLang][key]) element.innerHTML = translations[currentLang][key];
             });
             document.getElementById('lang-toggle').innerText = translations[currentLang].langToggleBtn;
-            renderProducts();
-            updateCartUI();
+            renderProducts(); updateCartUI(); initTyped();
         }
 
-        document.getElementById('lang-toggle').addEventListener('click', () => {
-            currentLang = currentLang === 'th' ? 'en' : 'th';
-            updatePageLanguage();
-        });
-
-        // Theme Toggle
+        document.getElementById('lang-toggle').addEventListener('click', () => { currentLang = currentLang === 'th' ? 'en' : 'th'; updatePageLanguage(); });
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden');
             document.getElementById('theme-toggle-light-icon').classList.toggle('hidden');
             document.documentElement.classList.toggle('dark');
         });
 
-        // Init Load
         window.addEventListener('load', () => {
-            updatePageLanguage();
-            AOS.init({ once: true, offset: 50 });
-            
+            updatePageLanguage(); AOS.init({ once: true, offset: 50 });
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    document.body.classList.remove('loading');
-                    showPromoPopup(); // เรียก popup หลังโหลดหน้าเสร็จ
-                }, 700);
+                setTimeout(() => { preloader.style.display = 'none'; document.body.classList.remove('loading'); showPromoPopup(); }, 700);
             }, 1000); 
         });
     </script>
